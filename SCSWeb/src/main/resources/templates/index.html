@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function(){
+            $("#header").load("header.html");
+        });
+    </script>
+</head>
+<body style="background-color:darkcyan">
+<div id="header"></div>
+<h1 class="text-white">Smartphone comparison system</h1>
+
+<table class="table table-dark table-striped" style="width: auto;vertical-align: center; horiz-align: center">
+    <thead>
+    <tr>
+        <th scope="col" style="color:cyan">Brand</th>
+        <th scope="col" style="color:cyan">Name</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:each="smartphone: ${smartphoneList}">
+        <td>
+            <a th:href="@{/brand/{id}(id=${smartphone.getBrand().getId()})}" th:text="${smartphone.getBrand().getName()}" target="_self"></a>
+        </td>
+        <td>
+            <a th:href="@{/smartphone/{id}(id=${smartphone.getId()})}" th:text="${smartphone.getName()}" target="_self"></a>
+        </td>
+        <td>
+            <input th:type="checkbox" id="compareCB" name="phone" th:value="${smartphone.getId()}">
+        </td>
+    </tr>
+    <input type='button' class="btn btn-dark" value='Compare!' onclick="document.location.href='/compare';"/>
+
+    </form>
+    </tbody>
+    <script>
+        $(":checkbox[name=phone]").bind('change', function () {
+            if ($(this).is(':checked'))
+                $.post('/compare/add', { phone: $(this).val()});
+            else
+                $.post('/compare/remove', { phone: $(this).val()});
+        });
+    </script>
+    <p></p>
+</table>
+</body>
+</html>

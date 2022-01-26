@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smartphones</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function(){
+            $("#header").load("header.html");
+        });
+    </script>
+</head>
+<body style="background-color:darkcyan">
+<div class="b-example-divider"></div>
+<div id="header"></div>
+
+<h1 class="text-white">Smartphones: </h1>
+
+<table class="table table-dark table-striped" style="width: auto;vertical-align: center; horiz-align: center">
+    <thead>
+    <tr>
+        <th scope="col" style="color:cyan">Name</th>
+        <th scope="col" style="color:cyan">Brand</th>
+        <th scope="col" style="color:cyan">Release</th>
+        <th scope="col" style="color:cyan">OS</th>
+        <th scope="col" style="color:cyan">Weight (<a style="color:red">g</a>)</th>
+        <th scope="col" style="color:cyan">Resolution (<a style="color:red">px</a>)</th>
+        <th scope="col" style="color:cyan">Dimensions (<a style="color:red">mm</a>)</th>
+        <th scope="col" style="color:cyan">Chipset</th>
+        <th scope="col" style="color:cyan">Storage (<a style="color:red">GB</a>)</th>
+        <th scope="col" style="color:cyan">RAM (<a style="color:red">GB</a>)</th>
+        <th scope="col" style="color:cyan">Color</th>
+        <th scope="col" style="color:cyan">Battery (<a style="color:red">mAh</a>)</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="smartphone: ${smartphoneList}">
+        <td>
+            <a th:href="@{/smartphone/{id}(id=${smartphone.getId()})}" th:text="${smartphone.getName()}" target="_self"></a>
+        </td>
+        <td>
+            <a th:href="@{/brand/{id}(id=${smartphone.getBrand().getId()})}" th:text="${smartphone.getBrand().getName()}" target="_self"></a>
+        </td>
+        <td th:text="${smartphone.getReleaseDate()}"></td>
+        <td>
+           <a th:href="@{/os/{id}(id=${smartphone.getOS().getId()})}" th:text="${smartphone.getOS().toString()}" target="_self"></a>
+        </td>
+        <td th:text="${smartphone.getWeight()}"></td>
+        <td th:text="${smartphone.getResolutionX()} + 'x' + ${smartphone.getResolutionY()}"></td>
+        <td th:text="${smartphone.getWidth()} + 'x' + ${smartphone.getHeight()} + 'x' + ${smartphone.getDepth()}"></td>
+        <td>
+            <a th:href="@{/chipset/{id}(id=${smartphone.getChipset().getId()})}" th:text="${smartphone.getChipset().getName()}" target="_self"></a>
+        </td>
+        <td th:text="${smartphone.getStorage()}"></td>
+        <td th:text="${smartphone.getRAM()}"></td>
+        <td th:text="${smartphone.getColor()}"></td>
+        <td th:text="${smartphone.getBattery()}"></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
